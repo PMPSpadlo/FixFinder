@@ -1,66 +1,107 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# FixFinder – A Web Application for Comparing Car Repair Services
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**FixFinder** is a Laravel-based web application designed to help vehicle owners find the best automotive repair services by comparing workshops, pricing, availability, and customer reviews. By providing an organized and transparent overview of available options, FixFinder empowers users to make informed decisions about their car repair needs. Meanwhile, mechanics and administrators can showcase their services and efficiently manage incoming requests.
 
-## About Laravel
+## Key Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Workshops Management:**
+    - Publicly accessible endpoints to list available workshops.
+    - Role-based endpoints (mechanics, admins) to add or manage workshops.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Services Catalog:**
+    - Public endpoints to retrieve service details.
+    - Admin-only endpoints for adding new services.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **User Authentication & Roles:**
+    - Public registration and login endpoints.
+    - Laravel Sanctum-based token authentication.
+    - Role-based access control (admin, mechanic, customer) to protect certain routes.
 
-## Learning Laravel
+- **Reviews & Ratings:**
+    - Public endpoints for browsing reviews.
+    - Authenticated users can post their own reviews.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- **Service Requests & Quotes:**
+    - Customers can request services (e.g., repairs, towing).
+    - Mechanics and admins can manage and respond to these requests.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Technology Stack
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- **Backend:** Laravel (PHP)
+- **Database:** MySQL (or compatible SQL databases)
+- **Authentication:** Laravel Sanctum
+- **Authorization:** Middleware-based role checking
 
-## Laravel Sponsors
+## API Structure
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+All API routes are defined in `routes/api.php` and are grouped and protected by middleware. Some key routes include:
 
-### Premium Partners
+- **Authentication (AuthController):**
+    - `POST /api/auth/login`
+    - `POST /api/auth/register`
+    - `POST /api/auth/logout` (authenticated users only)
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+- **Users (UserController):**
+    - `GET /api/users` (admins only)
 
-## Contributing
+- **Workshops (WorkshopController):**
+    - `GET /api/workshops` (public)
+    - `GET /api/workshops/{id}` (public)
+    - `POST /api/workshops` (mechanics, admins)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- **Services (ServiceController):**
+    - `GET /api/services` (public)
+    - `GET /api/services/{id}` (public)
+    - `POST /api/services` (admins only)
 
-## Code of Conduct
+- **Reviews (ReviewController):**
+    - `GET /api/reviews` (public)
+    - `POST /api/reviews` (authenticated users)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- **Service Requests (ServiceRequestController):**
+    - `GET /api/service-requests` (mechanics, admins)
+    - `GET /api/service-requests/{id}` (mechanics, admins)
+    - `POST /api/service-requests` (customers)
+    - `PATCH /api/service-requests/{id}` (mechanics, admins)
 
-## Security Vulnerabilities
+## Getting Started
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Prerequisites
+- PHP >= 8.0
+- Composer
+- Node.js & npm
+- MySQL or another supported database
 
-## License
+### Installation Steps
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/your-username/fixfinder.git
+   cd fixfinder
+
+2. **Install PHP Dependencies:**
+    ```bash
+    composer install
+
+3. **Install Frontend Dependencies:**
+    ```bash
+    npm install
+    npm run dev
+
+4. **Environment Setup: Copy the example environment file and configure it as needed:**
+    ```bash
+    cp .env.example .env
+    php artisan key:generate
+
+5. **Update .env with your database credentials and any other necessary configurations.**
+
+6. **Database Migration & Seeding:**
+    ```bash
+    php artisan migrate --seed
+
+7. **DRunning the Development Server:**
+    ```bash
+    php artisan serve
+   
+The application will be available at:
+http://localhost:8000.
