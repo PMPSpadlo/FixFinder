@@ -76,7 +76,7 @@ All API routes are defined in `routes/api.php` and are grouped and protected by 
 
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/your-username/fixfinder.git
+   git clone https://github.com/PMPSpadlo/FixFinder.git
    cd fixfinder
 
 2. **Install PHP Dependencies:**
